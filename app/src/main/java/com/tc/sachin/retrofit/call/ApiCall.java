@@ -8,6 +8,6 @@ public interface ApiCall {
 
 
     @GET(WebAPI.GET_CONTENT)
-    Observable<Object> getContent();
+    Observable<String> getContent();
 
 }

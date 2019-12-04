@@ -2,8 +2,6 @@ package com.tc.sachin.controller;
 
 import android.app.Application;
 import android.content.Context;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.tc.sachin.BuildConfig;
 import com.tc.sachin.retrofit.WebAPI;
 import java.io.IOException;
@@ -16,24 +14,12 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainBaseApplication extends Application {
 
     private static boolean activityVisible;
-    private static Context mcontext;
-    private static String TOKEN = "";
     private static Retrofit retrofit;
-    private static long tx;
-    private static long rx;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mcontext = this;
-
-    }
-
 
     public static boolean isActivityVisible() {
         return activityVisible;
@@ -64,9 +50,6 @@ public class MainBaseApplication extends Application {
 
                     Request.Builder builder = original.newBuilder();
                     builder.method(original.method(), original.body());
-//                    builder.header("Accept", "application/json");
-                    if (TOKEN.length() > 0)
-                        builder.header("Authorization", TOKEN);
                     return chain.proceed(builder.build());
                 }
             });
@@ -80,26 +63,14 @@ public class MainBaseApplication extends Application {
             httpClient.addInterceptor(interceptor);
 
             OkHttpClient client = httpClient.build();
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(WebAPI.BASE_URL)
                     .client(client)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
         }
         return retrofit;
-    }
-
-    public static void resetRetrofitInstance() {
-        retrofit = null;
-    }
-
-    public static void setToken(String token) {
-        TOKEN = token;
-        retrofit = null;
     }
 }

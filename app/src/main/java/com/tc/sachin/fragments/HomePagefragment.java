@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +21,12 @@ import com.tc.sachin.retrofit.task.ApiTask;
 import java.util.HashMap;
 
 
-public class HomePagefragment extends Fragment implements OnApiResponseListner {
+public class HomePagefragment extends Fragment {
     private Context mcontext;
     private HashMap<String, String> noCacheHeaders;
     public String className = HomePagefragment.class.getSimpleName();
+    private Button btn_begin;
+    private TextView tcr1,tcr2,tcr3;
 
     public static HomePagefragment newInstance() {
         HomePagefragment f = new HomePagefragment();
@@ -56,17 +60,31 @@ public class HomePagefragment extends Fragment implements OnApiResponseListner {
 //            InputMethodManager imm = (InputMethodManager) mcontext.getSystemService(Context.INPUT_METHOD_SERVICE);
 //            imm.hideSoftInputFromWindow(views.getWindowToken(), 0);
 //        }
+        initializeView(view);
 
-        new ApiTask().getContent(this);
     }
 
-    @Override
-    public void onResponseComplete(Object clsGson, int requestCode, int responseCode) {
-        System.out.println("----clsGson--- "+clsGson);
-    }
+    private void initializeView(View view){
+        tcr1 = (TextView) view.findViewById(R.id.tcr1);
+        tcr2 = (TextView) view.findViewById(R.id.tcr2);
+        tcr3 = (TextView) view.findViewById(R.id.tcr3);
+        btn_begin = (Button)view.findViewById(R.id.btn_begin);
+        btn_begin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ApiTask().getContent(new OnApiResponseListner() {
+                    @Override
+                    public void onResponseComplete(Object clsGson, int requestCode, int responseCode) {
+                        System.out.println("----onResponseComplete--- "+clsGson);
+                        tcr1.setText(clsGson+"");
+                    }
 
-    @Override
-    public void onResponseError(String errorMessage, int requestCode, int responseCode) {
-        System.out.println("----errorMessage-- "+errorMessage);
+                    @Override
+                    public void onResponseError(String errorMessage, int requestCode, int responseCode) {
+                        System.out.println("----onResponseError--- "+errorMessage);
+                    }
+                });
+            }
+        });
     }
 }
