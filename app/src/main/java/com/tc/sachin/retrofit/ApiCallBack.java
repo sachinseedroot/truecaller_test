@@ -1,6 +1,8 @@
 package com.tc.sachin.retrofit;
 
 
+import androidx.annotation.CallSuper;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -38,4 +40,6 @@ public class ApiCallBack implements Observer {
     public void onComplete() {
 
     }
+
+
 }

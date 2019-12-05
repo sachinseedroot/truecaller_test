@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
     <Button
         android:padding="5dp"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,54 +13,58 @@
         android:background="@android:color/holo_red_dark"
         android:textColor="@android:color/white"
         android:id="@+id/btn_begin"></Button>
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical">
-      <TextView
-          android:padding="5dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/tc1"
-          android:textStyle="bold"
-          android:text="Truecaller10thCharacterRequest"
-          android:background="@android:color/black"
-          android:gravity="center"
-          android:textColor="@android:color/white"/>
-      <TextView
-          android:padding="5dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/tcr1" />
-      <TextView
-          android:padding="5dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/tc2"
-          android:textStyle="bold"
-          android:text="TruecallerEvery10thCharacterRequest"
-          android:background="@android:color/black"
-          android:gravity="center"
-          android:textColor="@android:color/white"/>
-      <TextView
-          android:padding="5dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/tcr2" />
-      <TextView
-          android:padding="5dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/tc3"
-          android:textStyle="bold"
-          android:text="TruecallerWordCounterRequest"
-          android:background="@android:color/black"
-          android:gravity="center"
-          android:textColor="@android:color/white"/>
-      <TextView
-          android:padding="5dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/tcr3" />
-  </LinearLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tc1"
+            android:textStyle="bold"
+            android:text="Truecaller10thCharacterRequest"
+            android:background="@android:color/black"
+            android:gravity="center"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tcr1" />
+        <TextView
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tc2"
+            android:textStyle="bold"
+            android:text="TruecallerEvery10thCharacterRequest"
+            android:background="@android:color/black"
+            android:gravity="center"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tcr2" />
+        <TextView
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tc3"
+            android:textStyle="bold"
+            android:text="TruecallerWordCounterRequest"
+            android:background="@android:color/black"
+            android:gravity="center"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tcr3" />
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>
