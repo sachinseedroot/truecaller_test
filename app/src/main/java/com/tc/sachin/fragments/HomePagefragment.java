@@ -1,13 +1,13 @@
 package com.tc.sachin.fragments;
 
 
+import android.app.ActionBar;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,28 +18,12 @@ import androidx.fragment.app.Fragment;
 
 import com.tc.sachin.R;
 import com.tc.sachin.apputilities.AppUtilities;
-import com.tc.sachin.controller.MainBaseApplication;
-import com.tc.sachin.retrofit.ConsumerCallBack;
 import com.tc.sachin.retrofit.OnApiResponseListner;
-import com.tc.sachin.retrofit.RequestCode;
-import com.tc.sachin.retrofit.RetryWithDelay;
-import com.tc.sachin.retrofit.call.ApiCall;
 import com.tc.sachin.retrofit.task.ApiTask;
 
 import java.util.HashMap;
-import java.util.Observer;
-import java.util.concurrent.Callable;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.ReplaySubject;
-import retrofit2.Retrofit;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 
 public class HomePagefragment extends Fragment {
@@ -101,78 +85,16 @@ public class HomePagefragment extends Fragment {
                     new ApiTask().getContent(new OnApiResponseListner() {
                         @Override
                         public void onResponseComplete(Object clsGson, int requestCode, int responseCode) {
-                            System.out.println("----onResponseComplete--- " + clsGson);
-//                            if (requestCode == RequestCode.Truecaller10thCharacterRequest) {
-//                                tcr1.setText(Character.toString(((String) clsGson).charAt(10)));
-//                                loadResults(clsGson+"");
-                            letsgo();
-//                            }
-
-
-                            if (requestCode == RequestCode.TruecallerEvery10thCharacterRequest) {
-                                tcr1.setText(Character.toString(((String) clsGson).charAt(10)));
-                            }
+                            new Task1().execute((String) clsGson);
+                            new Task2().execute((String) clsGson);
+                            new Task3().execute((String) clsGson);
                         }
 
                         @Override
                         public void onResponseError(String errorMessage, int requestCode, int responseCode) {
-                            System.out.println("----errorMessage--- " + errorMessage);
+                           Toast.makeText(mcontext,errorMessage,Toast.LENGTH_SHORT).show();
                         }
                     });
-
-//                    new ApiTask().getContent(new OnApiResponseListner() {
-//                        @Override
-//                        public void onResponseComplete(Object clsGson, int requestCode, int responseCode) {
-//                            System.out.println("----onResponseComplete--- " + clsGson);
-////                            if (requestCode == RequestCode.Truecaller10thCharacterRequest) {
-////                                tcr1.setText(Character.toString(((String) clsGson).charAt(10)));
-////                            }
-//                            loadResults(clsGson+"");
-//                        }
-//
-//                        @Override
-//                        public void onResponseError(String errorMessage, int requestCode, int responseCode) {
-//                            System.out.println("----onResponseError--- " + errorMessage);
-//                        }
-//
-//
-//
-//                    });
-
-
-
-//                    new ApiTask().getEvery10Content(new OnApiResponseListner() {
-//                        @Override
-//                        public void onResponseComplete(Object clsGson, int requestCode, int responseCode) {
-//                            System.out.println("----onResponseComplete--- " + clsGson);
-//
-//                            if (requestCode == RequestCode.TruecallerEvery10thCharacterRequest) {
-//                                String res = (String) clsGson;
-//                                int val = 10;
-//                                boolean run = true;
-//                                StringBuilder sb = new StringBuilder();
-//
-//                                while (run) {
-//                                    if (res.length()<val) {
-//                                        run = false;
-//                                        tcr2.setText(sb+"");
-//                                        break;
-//                                    } else {
-//                                        sb.append(Character.toString(res.charAt(val)));
-//                                    }
-//                                    val = val + 10;
-//                                }
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onResponseError(String errorMessage, int requestCode, int responseCode) {
-//                            System.out.println("----onResponseError--- " + errorMessage);
-//                        }
-//
-//
-//
-//                    });
                 } else {
                     Toast.makeText(mcontext, "No internet connection", Toast.LENGTH_SHORT).show();
                 }
@@ -180,77 +102,75 @@ public class HomePagefragment extends Fragment {
         });
     }
 
-    private void loadResults(final String resposne){
-        CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-        ReplaySubject replaySubject = ReplaySubject.create();
-        replaySubject.skip(9).buffer(1,10);
+    public class Task1 extends AsyncTask<String, Void, String> {
 
+        @Override
+        protected String doInBackground(String... s) {
+            return Character.toString(((String) s[0]).charAt(10));
+        }
 
-//        mCompositeDisposable.add(replaySubject
-//                .firstElement()
-//                .map(new Function() {
-//                    @Override
-//                    public Object apply(Object o) throws Exception {
-//                        char[] respo = resposne.toCharArray();
-//                        return Observable.fromArray(respo);
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new DisposableObserver<String>() {
-//                    @Override
-//                    public void onComplete() {
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                    }
-//
-//                    @Override
-//                    public void onNext(String value) {
-//                    }
-//                }));
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            tcr1.setText(s);
+        }
     }
 
-    public void letsgo(){
-        CompositeDisposable disposables = new CompositeDisposable();
+    private class Task2 extends AsyncTask<String, Void, StringBuilder> {
 
-        ReplaySubject replaySubject = ReplaySubject.create();
-        replaySubject.skip(9).buffer(1,10);
+        @Override
+        protected StringBuilder doInBackground(String... strings) {
+            int val = 10;
+            boolean run = true;
+            StringBuilder sb = new StringBuilder();
 
-// adding an Observable to the disposable
-        disposables.add(sampleObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<String>() {
-                    @Override
-                    public void onComplete() {
-                        System.out.println("----onComplete--- ");
-                    }
+            while (run) {
+                if (strings[0].length() < val) {
+                    run = false;
+                    return sb;
 
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.println("----Throwable--- "+e);
-                    }
-
-                    @Override
-                    public void onNext(String value) {
-                        System.out.println("----onNext--- "+value);
-                    }
-                })
-        );
-
-
-
-    }
-    static Observable<String> sampleObservable() {
-        return Observable.defer(new Callable<ObservableSource<? extends String>>() {
-            @Override
-            public ObservableSource<? extends String> call() throws Exception {
-                // Do some long running operation
-//                    SystemClock.sleep(2000);
-                return Observable.just("one", "two", "three", "four", "five");
+                } else {
+                    sb.append(Character.toString(strings[0].charAt(val)));
+                }
+                val = val + 10;
             }
-        });
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(StringBuilder s) {
+            super.onPostExecute(s);
+            tcr2.setText(s.toString());
+        }
+    }
+
+    private class Task3 extends AsyncTask<String,Void,StringBuilder>{
+
+        @Override
+        protected StringBuilder doInBackground(String... strings) {
+            String[]abc = strings[0].split("\\s+");
+            HashMap<String,Integer> stringIntegerHashMap = new HashMap<>();
+            for(int i=0;i<abc.length;i++){
+                if(stringIntegerHashMap.containsKey(abc[i])) {
+                    stringIntegerHashMap.put(abc[i], stringIntegerHashMap.get(abc[i]) + 1);
+                }else{
+                    stringIntegerHashMap.put(abc[i], 1);
+                }
+            }
+            StringBuilder sb = new StringBuilder();
+            for ( Map.Entry<String, Integer> entry : stringIntegerHashMap.entrySet()) {
+                String key = entry.getKey();
+                String val = Integer.toString(entry.getValue());
+                sb = sb.append(key).append(" = ").append(val).append("\n");
+
+            }
+            return sb;
+        }
+
+        @Override
+        protected void onPostExecute(StringBuilder aVoid) {
+            super.onPostExecute(aVoid);
+            tcr3.setText(aVoid.toString());
+        }
     }
 }
