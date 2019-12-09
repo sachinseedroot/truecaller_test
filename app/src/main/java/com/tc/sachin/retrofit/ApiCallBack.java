@@ -1,15 +1,12 @@
 package com.tc.sachin.retrofit;
 
-
-import androidx.annotation.CallSuper;
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class ApiCallBack implements Observer {
 
     private OnApiResponseListner onApiResponseListner;
-    private int requestCode = 0;
+    private int requestCode = 100;
 
     public ApiCallBack(OnApiResponseListner onApiResponseListner, int requestCode) {
         this.onApiResponseListner = onApiResponseListner;
@@ -40,6 +37,5 @@ public class ApiCallBack implements Observer {
     public void onComplete() {
 
     }
-
 
 }

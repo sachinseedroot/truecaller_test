@@ -6,8 +6,6 @@ import retrofit2.http.GET;
 
 public interface ApiCall {
 
-
     @GET(WebAPI.GET_CONTENT)
     Observable<String> getContent();
-
 }

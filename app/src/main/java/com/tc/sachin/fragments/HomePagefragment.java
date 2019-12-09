@@ -1,7 +1,6 @@
 package com.tc.sachin.fragments;
 
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,35 +10,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.tc.sachin.R;
 import com.tc.sachin.apputilities.AppUtilities;
 import com.tc.sachin.retrofit.OnApiResponseListner;
 import com.tc.sachin.retrofit.task.ApiTask;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
-
 
 public class HomePagefragment extends Fragment {
     private Context mcontext;
-    private HashMap<String, String> noCacheHeaders;
-    public String className = HomePagefragment.class.getSimpleName();
     private Button btn_begin;
-    private TextView tcr1, tcr2, tcr3;
+    private TextView truecaller10thCharacterRequest_tv, truecallerEvery10thCharacterRequest_tv, truecallerWordCounterRequest_tv;
 
     public static HomePagefragment newInstance() {
         HomePagefragment f = new HomePagefragment();
-
-        // Supply index input as an argument.
-        Bundle args = new Bundle();
-        f.setArguments(args);
-
         return f;
     }
 
@@ -53,34 +40,27 @@ public class HomePagefragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
-//        url = getArguments().getString("url", "");
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        View views = getActivity().getCurrentFocus();
-//        if (views != null) {
-//            InputMethodManager imm = (InputMethodManager) mcontext.getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(views.getWindowToken(), 0);
-//        }
         initializeView(view);
-
     }
 
     private void initializeView(View view) {
-        tcr1 = (TextView) view.findViewById(R.id.tcr1);
-        tcr2 = (TextView) view.findViewById(R.id.tcr2);
-        tcr3 = (TextView) view.findViewById(R.id.tcr3);
+        truecaller10thCharacterRequest_tv = (TextView) view.findViewById(R.id.tcr1);
+        truecallerEvery10thCharacterRequest_tv = (TextView) view.findViewById(R.id.tcr2);
+        truecallerWordCounterRequest_tv = (TextView) view.findViewById(R.id.tcr3);
         btn_begin = (Button) view.findViewById(R.id.btn_begin);
         btn_begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (AppUtilities.isNetworkAvailable(mcontext)) {
-                    tcr1.setText("Loading...");
-                    tcr2.setText("Loading...");
-                    tcr3.setText("Loading...");
+                    truecaller10thCharacterRequest_tv.setText("Loading...");
+                    truecallerEvery10thCharacterRequest_tv.setText("Loading...");
+                    truecallerWordCounterRequest_tv.setText("Loading...");
 
                     new ApiTask().getContent(new OnApiResponseListner() {
                         @Override
@@ -112,7 +92,7 @@ public class HomePagefragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            tcr1.setText(s);
+            truecaller10thCharacterRequest_tv.setText(s);
         }
     }
 
@@ -140,7 +120,7 @@ public class HomePagefragment extends Fragment {
         @Override
         protected void onPostExecute(StringBuilder s) {
             super.onPostExecute(s);
-            tcr2.setText(s.toString());
+            truecallerEvery10thCharacterRequest_tv.setText(s.toString());
         }
     }
 
@@ -170,7 +150,7 @@ public class HomePagefragment extends Fragment {
         @Override
         protected void onPostExecute(StringBuilder aVoid) {
             super.onPostExecute(aVoid);
-            tcr3.setText(aVoid.toString());
+            truecallerWordCounterRequest_tv.setText(aVoid.toString());
         }
     }
 }

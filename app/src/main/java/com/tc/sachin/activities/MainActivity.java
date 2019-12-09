@@ -16,7 +16,7 @@ import java.util.Stack;
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout frameLayoutContainer;
-    private HomePagefragment hmfragment;
+    private HomePagefragment homefragment;
     private Stack<Fragment> fragmentStack;
 
     @Override
@@ -34,31 +34,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadFragment(){
             try {
-                hmfragment = HomePagefragment.newInstance();
+                homefragment = HomePagefragment.newInstance();
                 fragmentStack.clear();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.add(frameLayoutContainer.getId(), hmfragment);
+                ft.add(frameLayoutContainer.getId(), homefragment);
                 if (fragmentStack.size() > 0) {
                     fragmentStack.lastElement().onPause();
                     ft.hide(fragmentStack.lastElement());
                 }
-                fragmentStack.push(hmfragment);
+                fragmentStack.push(homefragment);
                 ft.commitAllowingStateLoss();
             } catch (Exception e) {
                e.printStackTrace();
             }
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MainBaseApplication.activityResumed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MainBaseApplication.activityPaused();
     }
 }

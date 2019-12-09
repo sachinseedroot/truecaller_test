@@ -18,20 +18,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainBaseApplication extends Application {
 
-    private static boolean activityVisible;
     private static Retrofit retrofit;
-
-    public static boolean isActivityVisible() {
-        return activityVisible;
-    }
-
-    public static void activityResumed() {
-        activityVisible = true;
-    }
-
-    public static void activityPaused() {
-        activityVisible = false;
-    }
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

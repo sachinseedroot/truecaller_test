@@ -5,17 +5,14 @@ import com.tc.sachin.retrofit.ApiCallBack;
 import com.tc.sachin.retrofit.OnApiResponseListner;
 import com.tc.sachin.retrofit.RetryWithDelay;
 import com.tc.sachin.retrofit.call.ApiCall;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.ReplaySubject;
 import retrofit2.Retrofit;
 
 public class ApiTask {
 
     private final ApiCall apiCall;
-    private ReplaySubject<Object> replaySubject;
 
     public ApiTask() {
         Retrofit retrofit = MainBaseApplication.getRetrofitInstance();
